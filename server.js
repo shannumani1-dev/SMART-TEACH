@@ -880,13 +880,6 @@ Return exactly:
    START SERVER
 ========================= */
 
-app.listen(
-    PORT,
-    function(){
-
-        console.log(
-            `Smart Teach backend running at http://localhost:${PORT}`
-        );
-
-    }
-);
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Smart Teach backend running on port ${PORT}`);
+});
