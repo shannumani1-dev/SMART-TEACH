@@ -1,0 +1,4057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#6366f1"
+    >
+
+    <meta
+        name="description"
+        content="Smart Teach - AI Teacher Assistant"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="Smart Teach"
+    >
+
+    <link
+        rel="manifest"
+        href="manifest.json"
+    >
+
+    <title>Smart Teach</title>
+
+
+<style>
+
+/* =====================================================
+   THEME
+===================================================== */
+
+:root{
+
+    --bg:#f5f7fb;
+
+    --card:#ffffff;
+
+    --card2:#f8f9fd;
+
+    --text:#182033;
+
+    --muted:#70788a;
+
+    --border:#e4e7ef;
+
+    --primary:#6366f1;
+
+    --primary-dark:#4f46e5;
+
+    --danger:#ef4444;
+
+    --success:#16a34a;
+
+    --shadow:
+        0 10px 30px rgba(31,41,55,.08);
+
+}
+
+
+html[data-theme="dark"]{
+
+    --bg:#111827;
+
+    --card:#1f2937;
+
+    --card2:#273244;
+
+    --text:#f9fafb;
+
+    --muted:#aab2c0;
+
+    --border:#374151;
+
+    --primary:#818cf8;
+
+    --primary-dark:#6366f1;
+
+    --danger:#f87171;
+
+    --success:#4ade80;
+
+    --shadow:
+        0 10px 30px rgba(0,0,0,.25);
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    min-height:100vh;
+
+}
+
+
+button,
+input,
+select,
+textarea{
+
+    font:inherit;
+
+}
+
+
+button{
+
+    cursor:pointer;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:260px;
+
+    height:100vh;
+
+    background:var(--card);
+
+    border-right:
+        1px solid var(--border);
+
+    padding:24px 16px;
+
+    z-index:1000;
+
+}
+
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:
+        0 10px 28px;
+
+}
+
+
+.logo-icon{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #8b5cf6
+        );
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:24px;
+
+}
+
+
+.logo h1{
+
+    font-size:20px;
+
+}
+
+
+.logo p{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+    margin-top:3px;
+
+}
+
+
+.nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+
+.nav-item{
+
+    width:100%;
+
+    border:0;
+
+    background:transparent;
+
+    color:var(--muted);
+
+    padding:13px 14px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    text-align:left;
+
+}
+
+
+.nav-item:hover{
+
+    background:var(--card2);
+
+    color:var(--text);
+
+}
+
+
+.nav-item.active{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+
+.nav-icon{
+
+    width:25px;
+
+    text-align:center;
+
+    font-size:18px;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+
+    margin-left:260px;
+
+    min-height:100vh;
+
+}
+
+
+.topbar{
+
+    height:72px;
+
+    background:var(--card);
+
+    border-bottom:
+        1px solid var(--border);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 30px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:500;
+
+}
+
+
+.topbar-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+
+.topbar h2{
+
+    font-size:20px;
+
+}
+
+
+.date{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    margin-top:4px;
+
+}
+
+
+.icon-button{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    border:
+        1px solid var(--border);
+
+    background:var(--card);
+
+    color:var(--text);
+
+    font-size:18px;
+
+}
+
+
+.menu-button{
+
+    display:none;
+
+}
+
+
+.content{
+
+    max-width:1500px;
+
+    margin:auto;
+
+    padding:30px;
+
+}
+
+
+/* =====================================================
+   PAGES
+===================================================== */
+
+.page{
+
+    display:none;
+
+}
+
+
+.page.active{
+
+    display:block;
+
+}
+
+
+.page-header{
+
+    margin-bottom:25px;
+
+}
+
+
+.page-header h1{
+
+    font-size:28px;
+
+    margin-bottom:7px;
+
+}
+
+
+.page-header p{
+
+    color:var(--muted);
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.welcome{
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    color:white;
+
+    border-radius:24px;
+
+    padding:35px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:25px;
+
+}
+
+
+.welcome h1{
+
+    font-size:32px;
+
+    margin-bottom:10px;
+
+}
+
+
+.welcome p{
+
+    max-width:650px;
+
+    line-height:1.6;
+
+    opacity:.9;
+
+}
+
+
+.welcome-art{
+
+    font-size:90px;
+
+    opacity:.25;
+
+}
+
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
+
+    margin-bottom:30px;
+
+}
+
+
+.stat{
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    border-radius:18px;
+
+    padding:22px;
+
+}
+
+
+.stat-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+}
+
+
+.stat-number{
+
+    font-size:30px;
+
+    font-weight:bold;
+
+}
+
+
+.stat-label{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    margin-top:4px;
+
+}
+
+
+.stat-icon{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:13px;
+
+    background:var(--card2);
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:21px;
+
+}
+
+
+.section-title{
+
+    margin-bottom:16px;
+
+}
+
+
+.tools-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
+
+}
+
+
+.tool-card{
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    border-radius:18px;
+
+    padding:22px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.tool-card:hover{
+
+    transform:translateY(-3px);
+
+    border-color:var(--primary);
+
+}
+
+
+.tool-icon{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:15px;
+
+    background:var(--card2);
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:24px;
+
+    margin-bottom:15px;
+
+}
+
+
+.tool-card p{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    margin-top:7px;
+
+    line-height:1.5;
+
+}
+
+
+/* =====================================================
+   PANELS
+===================================================== */
+
+.panel{
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+    border-radius:18px;
+
+    padding:25px;
+
+}
+
+
+.panel h2{
+
+    margin-bottom:20px;
+
+}
+
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:18px;
+
+}
+
+
+.full{
+
+    grid-column:1/-1;
+
+}
+
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+
+.form-group label{
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    border:
+        1px solid var(--border);
+
+    background:var(--card2);
+
+    color:var(--text);
+
+    padding:13px 14px;
+
+    border-radius:11px;
+
+    outline:none;
+
+}
+
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:var(--primary);
+
+}
+
+
+textarea{
+
+    min-height:110px;
+
+    resize:vertical;
+
+}
+
+
+.button-row{
+
+    margin-top:20px;
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.primary-button{
+
+    background:var(--primary);
+
+    color:white;
+
+    border:0;
+
+    padding:12px 18px;
+
+    border-radius:11px;
+
+    font-weight:bold;
+
+}
+
+
+.primary-button:hover{
+
+    background:var(--primary-dark);
+
+}
+
+
+.danger-button{
+
+    background:var(--danger);
+
+    color:white;
+
+    border:0;
+
+    padding:8px 12px;
+
+    border-radius:9px;
+
+}
+
+
+/* =====================================================
+   RESULTS
+===================================================== */
+
+.result{
+
+    margin-top:25px;
+
+}
+
+
+.result-box{
+
+    background:var(--card2);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:22px;
+
+}
+
+
+.result-title{
+
+    font-size:22px;
+
+    margin:
+        15px 0 12px;
+
+}
+
+
+.result-subtitle{
+
+    color:var(--muted);
+
+    margin-bottom:20px;
+
+}
+
+
+.generated-question{
+
+    background:var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:14px;
+
+    padding:18px;
+
+    margin-bottom:14px;
+
+    line-height:1.6;
+
+}
+
+
+.generated-question h3{
+
+    margin-bottom:8px;
+
+}
+
+
+.generated-question p{
+
+    margin-top:10px;
+
+}
+
+
+.generated-question ul{
+
+    padding-left:22px;
+
+    margin-top:8px;
+
+}
+
+
+.option{
+
+    background:var(--card2);
+
+    border:
+        1px solid var(--border);
+
+    padding:10px 12px;
+
+    border-radius:9px;
+
+    margin-top:8px;
+
+}
+
+
+.answer{
+
+    color:var(--success);
+
+    font-weight:bold;
+
+    margin-top:12px;
+
+}
+
+
+.explanation{
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    margin-top:6px;
+
+}
+
+
+.loading{
+
+    text-align:center;
+
+    padding:35px;
+
+    color:var(--muted);
+
+}
+
+
+.spinner{
+
+    width:35px;
+
+    height:35px;
+
+    border:4px solid var(--border);
+
+    border-top-color:var(--primary);
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+
+    margin:
+        0 auto 12px;
+
+}
+
+
+@keyframes spin{
+
+    to{
+        transform:rotate(360deg);
+    }
+
+}
+
+
+/* =====================================================
+   STUDENTS
+===================================================== */
+
+.student-add{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr auto;
+
+    gap:12px;
+
+    margin-bottom:20px;
+
+}
+
+
+.student-item{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:15px;
+
+    background:var(--card2);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:12px;
+
+    margin-bottom:10px;
+
+}
+
+
+.student-info strong{
+
+    display:block;
+
+    margin-bottom:4px;
+
+}
+
+
+.student-info span{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+.empty{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:var(--muted);
+
+}
+
+
+/* =====================================================
+   PLANNER
+===================================================== */
+
+.task-add{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 200px auto;
+
+    gap:12px;
+
+    margin-bottom:20px;
+
+}
+
+
+.task-item{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:15px;
+
+    background:var(--card2);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:12px;
+
+    margin-bottom:10px;
+
+}
+
+
+.task-info strong{
+
+    display:block;
+
+    margin-bottom:4px;
+
+}
+
+
+.task-info span{
+
+    color:var(--muted);
+
+    font-size:12px;
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.toast{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    background:var(--text);
+
+    color:var(--bg);
+
+    padding:14px 18px;
+
+    border-radius:12px;
+
+    transform:translateY(100px);
+
+    opacity:0;
+
+    transition:.3s;
+
+    z-index:5000;
+
+}
+
+
+.toast.show{
+
+    transform:translateY(0);
+
+    opacity:1;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:1000px){
+
+    .tools-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:750px){
+
+    .sidebar{
+
+        transform:
+            translateX(-100%);
+
+        transition:.25s;
+
+    }
+
+
+    .sidebar.open{
+
+        transform:
+            translateX(0);
+
+    }
+
+
+    .main{
+
+        margin-left:0;
+
+    }
+
+
+    .menu-button{
+
+        display:block;
+
+    }
+
+
+    .content{
+
+        padding:18px;
+
+    }
+
+
+    .topbar{
+
+        padding:0 18px;
+
+    }
+
+
+    .welcome{
+
+        padding:25px;
+
+    }
+
+
+    .welcome h1{
+
+        font-size:25px;
+
+    }
+
+
+    .welcome-art{
+
+        display:none;
+
+    }
+
+
+    .stats,
+    .tools-grid,
+    .form-grid,
+    .student-add,
+    .task-add{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .full{
+
+        grid-column:auto;
+
+    }
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@media print{
+
+    .sidebar,
+    .topbar,
+    .page-header,
+    .button-row,
+    .print-button{
+
+        display:none!important;
+
+    }
+
+
+    .main{
+
+        margin-left:0;
+
+    }
+
+
+    body{
+
+        background:white;
+
+        color:black;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🎓
+        </div>
+
+        <div>
+
+            <h1>
+                Smart Teach
+            </h1>
+
+            <p>
+                Teacher Assistant
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav class="nav">
+
+        <button
+            class="nav-item active"
+            data-page="dashboard"
+        >
+            <span class="nav-icon">
+                🏠
+            </span>
+
+            Dashboard
+        </button>
+
+
+        <button
+            class="nav-item"
+            data-page="lessonPlanner"
+        >
+            <span class="nav-icon">
+                📖
+            </span>
+
+            Lesson Planner
+        </button>
+
+
+        <button
+            class="nav-item"
+            data-page="questionPaper"
+        >
+            <span class="nav-icon">
+                📄
+            </span>
+
+            Question Paper
+        </button>
+
+
+        <button
+            class="nav-item"
+            data-page="quizMaker"
+        >
+            <span class="nav-icon">
+                🧠
+            </span>
+
+            Quiz Maker
+        </button>
+
+
+        <button
+            class="nav-item"
+            data-page="students"
+        >
+            <span class="nav-icon">
+                👩‍🎓
+            </span>
+
+            Students
+        </button>
+
+
+        <button
+            class="nav-item"
+            data-page="worksheet"
+        >
+            <span class="nav-icon">
+                📚
+            </span>
+
+            Worksheet
+        </button>
+
+
+        <button
+            class="nav-item"
+            data-page="planner"
+        >
+            <span class="nav-icon">
+                📅
+            </span>
+
+            Planner
+        </button>
+
+    </nav>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+<header class="topbar">
+
+    <div class="topbar-left">
+
+        <button
+            class="icon-button menu-button"
+            id="menuButton"
+        >
+            ☰
+        </button>
+
+
+        <div>
+
+            <h2 id="topTitle">
+                Dashboard
+            </h2>
+
+            <div
+                class="date"
+                id="currentDate"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="icon-button"
+        id="themeButton"
+        aria-label="Change theme"
+    >
+        🌙
+    </button>
+
+</header>
+
+
+<div class="content">
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section
+    class="page active"
+    id="dashboard"
+>
+
+    <div class="welcome">
+
+        <div>
+
+            <h1>
+                Welcome to Smart Teach 👋
+            </h1>
+
+            <p>
+                Your AI teacher assistant for
+                lesson plans, question papers,
+                quizzes, worksheets and student
+                management.
+            </p>
+
+        </div>
+
+
+        <div class="welcome-art">
+            🎓
+        </div>
+
+    </div>
+
+
+    <div class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-top">
+
+                <div>
+
+                    <div
+                        class="stat-number"
+                        id="studentCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Students
+                    </div>
+
+                </div>
+
+
+                <div class="stat-icon">
+                    👩‍🎓
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-top">
+
+                <div>
+
+                    <div
+                        class="stat-number"
+                        id="taskCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Planner Tasks
+                    </div>
+
+                </div>
+
+
+                <div class="stat-icon">
+                    📅
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-top">
+
+                <div>
+
+                    <div class="stat-number">
+                        7
+                    </div>
+
+                    <div class="stat-label">
+                        Teaching Tools
+                    </div>
+
+                </div>
+
+
+                <div class="stat-icon">
+                    🛠️
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-title">
+
+        <h2>
+            Teaching Tools
+        </h2>
+
+    </div>
+
+
+    <div class="tools-grid">
+
+
+        <div
+            class="tool-card"
+            data-page="lessonPlanner"
+        >
+
+            <div class="tool-icon">
+                📖
+            </div>
+
+            <h3>
+                Lesson Planner
+            </h3>
+
+            <p>
+                Create structured AI lesson plans.
+            </p>
+
+        </div>
+
+
+        <div
+            class="tool-card"
+            data-page="questionPaper"
+        >
+
+            <div class="tool-icon">
+                📄
+            </div>
+
+            <h3>
+                Question Paper
+            </h3>
+
+            <p>
+                Generate logical questions.
+            </p>
+
+        </div>
+
+
+        <div
+            class="tool-card"
+            data-page="quizMaker"
+        >
+
+            <div class="tool-icon">
+                🧠
+            </div>
+
+            <h3>
+                Quiz Maker
+            </h3>
+
+            <p>
+                Create multiple-choice quizzes.
+            </p>
+
+        </div>
+
+
+        <div
+            class="tool-card"
+            data-page="students"
+        >
+
+            <div class="tool-icon">
+                👩‍🎓
+            </div>
+
+            <h3>
+                Students
+            </h3>
+
+            <p>
+                Manage your students.
+            </p>
+
+        </div>
+
+
+        <div
+            class="tool-card"
+            data-page="worksheet"
+        >
+
+            <div class="tool-icon">
+                📚
+            </div>
+
+            <h3>
+                Worksheet
+            </h3>
+
+            <p>
+                Create practice worksheets.
+            </p>
+
+        </div>
+
+
+        <div
+            class="tool-card"
+            data-page="planner"
+        >
+
+            <div class="tool-icon">
+                📅
+            </div>
+
+            <h3>
+                Planner
+            </h3>
+
+            <p>
+                Manage teaching tasks.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     LESSON PLANNER
+===================================================== -->
+
+<section
+    class="page"
+    id="lessonPlanner"
+>
+
+    <div class="page-header">
+
+        <h1>
+            Lesson Planner
+        </h1>
+
+        <p>
+            Create a complete AI-powered lesson plan.
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>
+            Lesson Details
+        </h2>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Class
+                </label>
+
+                <input
+                    id="lessonClass"
+                    placeholder="Example: Class 7"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Subject
+                </label>
+
+                <input
+                    id="lessonSubject"
+                    placeholder="Example: Science"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Topic
+                </label>
+
+                <input
+                    id="lessonTopic"
+                    placeholder="Example: Photosynthesis"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Duration
+                </label>
+
+                <input
+                    id="lessonDuration"
+                    value="45 minutes"
+                >
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    Learning Objective
+                </label>
+
+                <textarea
+                    id="lessonObjective"
+                    placeholder="What should students learn?"
+                ></textarea>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                class="primary-button"
+                id="createLessonBtn"
+                type="button"
+            >
+                ✨ Create Lesson Plan
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="result"
+        id="lessonResult"
+    ></div>
+
+</section>
+
+
+<!-- =====================================================
+     QUESTION PAPER
+===================================================== -->
+
+<section
+    class="page"
+    id="questionPaper"
+>
+
+    <div class="page-header">
+
+        <h1>
+            Question Paper
+        </h1>
+
+        <p>
+            Generate logical questions with answers.
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>
+            Question Details
+        </h2>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Class
+                </label>
+
+                <input
+                    id="questionClass"
+                    placeholder="Example: Class 7"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Subject
+                </label>
+
+                <input
+                    id="questionSubject"
+                    placeholder="Example: Mathematics"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Topic
+                </label>
+
+                <input
+                    id="questionTopic"
+                    placeholder="Example: Fractions"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Number of Questions
+                </label>
+
+                <input
+                    id="questionCount"
+                    type="number"
+                    min="1"
+                    max="20"
+                    value="5"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Difficulty
+                </label>
+
+                <select id="questionDifficulty">
+
+                    <option>
+                        Easy
+                    </option>
+
+                    <option selected>
+                        Medium
+                    </option>
+
+                    <option>
+                        Hard
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Question Style
+                </label>
+
+                <select id="questionStyle">
+
+                    <option>
+                        Mixed
+                    </option>
+
+                    <option>
+                        Conceptual
+                    </option>
+
+                    <option>
+                        Application
+                    </option>
+
+                    <option>
+                        Reasoning
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                class="primary-button"
+                id="generateQuestionBtn"
+                type="button"
+            >
+                ✨ Generate Questions
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="result"
+        id="questionResult"
+    ></div>
+
+</section>
+
+
+<!-- =====================================================
+     QUIZ MAKER
+===================================================== -->
+
+<section
+    class="page"
+    id="quizMaker"
+>
+
+    <div class="page-header">
+
+        <h1>
+            Quiz Maker
+        </h1>
+
+        <p>
+            Create a logical classroom quiz.
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>
+            Quiz Details
+        </h2>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Class
+                </label>
+
+                <input
+                    id="quizClass"
+                    placeholder="Example: Class 7"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Subject
+                </label>
+
+                <input
+                    id="quizSubject"
+                    placeholder="Example: Science"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Topic
+                </label>
+
+                <input
+                    id="quizTopic"
+                    placeholder="Example: Plants"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Number of Questions
+                </label>
+
+                <input
+                    id="quizCount"
+                    type="number"
+                    min="1"
+                    max="20"
+                    value="5"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Difficulty
+                </label>
+
+                <select id="quizDifficulty">
+
+                    <option>
+                        Easy
+                    </option>
+
+                    <option selected>
+                        Medium
+                    </option>
+
+                    <option>
+                        Hard
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                class="primary-button"
+                id="createQuizBtn"
+                type="button"
+            >
+                ✨ Create Quiz
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="result"
+        id="quizResult"
+    ></div>
+
+</section>
+
+
+<!-- =====================================================
+     STUDENTS
+===================================================== -->
+
+<section
+    class="page"
+    id="students"
+>
+
+    <div class="page-header">
+
+        <h1>
+            Students
+        </h1>
+
+        <p>
+            Manage your student list.
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>
+            Add Student
+        </h2>
+
+
+        <div class="student-add">
+
+            <input
+                id="studentName"
+                placeholder="Student name"
+            >
+
+
+            <input
+                id="studentClass"
+                placeholder="Class"
+            >
+
+
+            <button
+                class="primary-button"
+                id="addStudentBtn"
+                type="button"
+            >
+                Add Student
+            </button>
+
+        </div>
+
+
+        <div id="studentList"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WORKSHEET
+===================================================== -->
+
+<section
+    class="page"
+    id="worksheet"
+>
+
+    <div class="page-header">
+
+        <h1>
+            Worksheet
+        </h1>
+
+        <p>
+            Create practice material for students.
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>
+            Worksheet Details
+        </h2>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Class
+                </label>
+
+                <input
+                    id="worksheetClass"
+                    placeholder="Example: Class 7"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Subject
+                </label>
+
+                <input
+                    id="worksheetSubject"
+                    placeholder="Example: English"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Topic
+                </label>
+
+                <input
+                    id="worksheetTopic"
+                    placeholder="Example: Grammar"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Number of Questions
+                </label>
+
+                <input
+                    id="worksheetCount"
+                    type="number"
+                    min="1"
+                    max="20"
+                    value="10"
+                >
+
+            </div>
+
+
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                class="primary-button"
+                id="createWorksheetBtn"
+                type="button"
+            >
+                ✨ Create Worksheet
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="result"
+        id="worksheetResult"
+    ></div>
+
+</section>
+
+
+<!-- =====================================================
+     PLANNER
+===================================================== -->
+
+<section
+    class="page"
+    id="planner"
+>
+
+    <div class="page-header">
+
+        <h1>
+            Planner
+        </h1>
+
+        <p>
+            Keep track of teaching tasks.
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>
+            Add Task
+        </h2>
+
+
+        <div class="task-add">
+
+            <input
+                id="taskName"
+                placeholder="Task name"
+            >
+
+
+            <input
+                id="taskDate"
+                type="date"
+            >
+
+
+            <button
+                class="primary-button"
+                id="addTaskBtn"
+                type="button"
+            >
+                Add Task
+            </button>
+
+        </div>
+
+
+        <div id="taskList"></div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+</main>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+"use strict";
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function $(id){
+
+    return document.getElementById(id);
+
+}
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+
+        .replace(/&/g,"&amp;")
+
+        .replace(/</g,"&lt;")
+
+        .replace(/>/g,"&gt;")
+
+        .replace(/"/g,"&quot;")
+
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function showToast(message){
+
+    const toast = $("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(
+        window.smartTeachToast
+    );
+
+    window.smartTeachToast =
+        setTimeout(function(){
+
+            toast.classList.remove("show");
+
+        },2600);
+
+}
+
+
+function showLoading(element,message){
+
+    element.innerHTML = `
+
+        <div class="result-box">
+
+            <div class="loading">
+
+                <div class="spinner"></div>
+
+                <h2>
+                    ${escapeHTML(message)}
+                </h2>
+
+                <p>
+                    Smart Teach AI is working...
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function openPage(pageId){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page){
+
+            page.classList.remove("active");
+
+        });
+
+
+    const page =
+        $(pageId);
+
+
+    if(page){
+
+        page.classList.add("active");
+
+    }
+
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(function(item){
+
+            item.classList.toggle(
+                "active",
+                item.dataset.page === pageId
+            );
+
+        });
+
+
+    const titles = {
+
+        dashboard:"Dashboard",
+
+        lessonPlanner:"Lesson Planner",
+
+        questionPaper:"Question Paper",
+
+        quizMaker:"Quiz Maker",
+
+        students:"Students",
+
+        worksheet:"Worksheet",
+
+        planner:"Planner"
+
+    };
+
+
+    $("topTitle").textContent =
+        titles[pageId] ||
+        "Smart Teach";
+
+
+    $("sidebar")
+        .classList
+        .remove("open");
+
+
+    window.scrollTo(
+        0,
+        0
+    );
+
+}
+
+
+document
+    .querySelectorAll("[data-page]")
+    .forEach(function(element){
+
+        element.addEventListener(
+            "click",
+            function(){
+
+                openPage(
+                    element.dataset.page
+                );
+
+            }
+        );
+
+    });
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+$("menuButton")
+    .addEventListener(
+        "click",
+        function(){
+
+            $("sidebar")
+                .classList
+                .toggle("open");
+
+        }
+    );
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+$("currentDate").textContent =
+
+    new Date().toLocaleDateString(
+        undefined,
+        {
+            weekday:"long",
+            year:"numeric",
+            month:"long",
+            day:"numeric"
+        }
+    );
+
+
+/* =====================================================
+   DARK / LIGHT MODE
+===================================================== */
+
+function loadTheme(){
+
+    const saved =
+        localStorage.getItem(
+            "smartTeachTheme"
+        );
+
+
+    const theme =
+        saved === "dark"
+            ? "dark"
+            : "light";
+
+
+    document.documentElement
+        .dataset.theme =
+        theme;
+
+
+    $("themeButton").textContent =
+        theme === "dark"
+            ? "☀️"
+            : "🌙";
+
+}
+
+
+$("themeButton")
+    .addEventListener(
+        "click",
+        function(){
+
+            const isDark =
+                document.documentElement
+                    .dataset.theme === "dark";
+
+
+            const newTheme =
+                isDark
+                    ? "light"
+                    : "dark";
+
+
+            document.documentElement
+                .dataset.theme =
+                newTheme;
+
+
+            localStorage.setItem(
+                "smartTeachTheme",
+                newTheme
+            );
+
+
+            $("themeButton").textContent =
+                newTheme === "dark"
+                    ? "☀️"
+                    : "🌙";
+
+
+            showToast(
+                newTheme === "dark"
+                    ? "Dark theme enabled"
+                    : "Light theme enabled"
+            );
+
+        }
+    );
+
+
+loadTheme();
+
+
+/* =====================================================
+   API
+===================================================== */
+
+async function postJSON(
+    url,
+    body
+){
+
+    const response =
+        await fetch(
+            url,
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body:
+                    JSON.stringify(body)
+            }
+        );
+
+
+    let data;
+
+
+    try{
+
+        data =
+            await response.json();
+
+    }catch(error){
+
+        throw new Error(
+            "Server returned an invalid response."
+        );
+
+    }
+
+
+    if(
+        !response.ok ||
+        !data.success
+    ){
+
+        throw new Error(
+            data.message ||
+            "Request failed."
+        );
+
+    }
+
+
+    return data.data;
+
+}
+
+
+/* =====================================================
+   STUDENTS
+===================================================== */
+
+let students =
+    JSON.parse(
+        localStorage.getItem(
+            "smartTeachStudents"
+        ) || "[]"
+    );
+
+
+function renderStudents(){
+
+    $("studentCount").textContent =
+        students.length;
+
+
+    if(
+        students.length === 0
+    ){
+
+        $("studentList").innerHTML = `
+
+            <div class="empty">
+                No students added yet.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    $("studentList").innerHTML =
+
+        students
+            .map(function(student,index){
+
+                return `
+
+                    <div class="student-item">
+
+                        <div class="student-info">
+
+                            <strong>
+                                ${escapeHTML(
+                                    student.name
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(
+                                    student.className
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            class="danger-button"
+                            data-delete-student="${index}"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+}
+
+
+$("addStudentBtn")
+    .addEventListener(
+        "click",
+        function(){
+
+            const name =
+                $("studentName")
+                    .value
+                    .trim();
+
+
+            const className =
+                $("studentClass")
+                    .value
+                    .trim();
+
+
+            if(
+                !name ||
+                !className
+            ){
+
+                showToast(
+                    "Enter student name and class"
+                );
+
+                return;
+
+            }
+
+
+            students.push({
+
+                name:name,
+
+                className:className,
+
+                createdAt:
+                    new Date()
+                        .toISOString()
+
+            });
+
+
+            localStorage.setItem(
+                "smartTeachStudents",
+                JSON.stringify(students)
+            );
+
+
+            $("studentName").value = "";
+
+            $("studentClass").value = "";
+
+
+            renderStudents();
+
+            showToast(
+                "Student added"
+            );
+
+        }
+    );
+
+
+$("studentList")
+    .addEventListener(
+        "click",
+        function(event){
+
+            const index =
+                event.target
+                    .dataset
+                    .deleteStudent;
+
+
+            if(
+                index === undefined
+            ){
+
+                return;
+
+            }
+
+
+            students.splice(
+                Number(index),
+                1
+            );
+
+
+            localStorage.setItem(
+                "smartTeachStudents",
+                JSON.stringify(students)
+            );
+
+
+            renderStudents();
+
+        }
+    );
+
+
+/* =====================================================
+   TASKS
+===================================================== */
+
+let tasks =
+    JSON.parse(
+        localStorage.getItem(
+            "smartTeachTasks"
+        ) || "[]"
+    );
+
+
+function renderTasks(){
+
+    $("taskCount").textContent =
+        tasks.length;
+
+
+    if(
+        tasks.length === 0
+    ){
+
+        $("taskList").innerHTML = `
+
+            <div class="empty">
+                No tasks added yet.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    $("taskList").innerHTML =
+
+        tasks
+            .map(function(task,index){
+
+                return `
+
+                    <div class="task-item">
+
+                        <div class="task-info">
+
+                            <strong>
+                                ${escapeHTML(
+                                    task.name
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(
+                                    task.date ||
+                                    "No date"
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            class="danger-button"
+                            data-delete-task="${index}"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+}
+
+
+$("addTaskBtn")
+    .addEventListener(
+        "click",
+        function(){
+
+            const name =
+                $("taskName")
+                    .value
+                    .trim();
+
+
+            const date =
+                $("taskDate")
+                    .value;
+
+
+            if(!name){
+
+                showToast(
+                    "Enter a task name"
+                );
+
+                return;
+
+            }
+
+
+            tasks.push({
+
+                name:name,
+
+                date:date,
+
+                createdAt:
+                    new Date()
+                        .toISOString()
+
+            });
+
+
+            localStorage.setItem(
+                "smartTeachTasks",
+                JSON.stringify(tasks)
+            );
+
+
+            $("taskName").value = "";
+
+            $("taskDate").value = "";
+
+
+            renderTasks();
+
+            showToast(
+                "Task added"
+            );
+
+        }
+    );
+
+
+$("taskList")
+    .addEventListener(
+        "click",
+        function(event){
+
+            const index =
+                event.target
+                    .dataset
+                    .deleteTask;
+
+
+            if(
+                index === undefined
+            ){
+
+                return;
+
+            }
+
+
+            tasks.splice(
+                Number(index),
+                1
+            );
+
+
+            localStorage.setItem(
+                "smartTeachTasks",
+                JSON.stringify(tasks)
+            );
+
+
+            renderTasks();
+
+        }
+    );
+
+
+renderStudents();
+
+renderTasks();
+
+
+/* =====================================================
+   RENDER AI QUESTIONS
+===================================================== */
+
+function renderQuestions(
+    data,
+    target,
+    title
+){
+
+    const questions =
+        Array.isArray(data.questions)
+            ? data.questions
+            : [];
+
+
+    target.innerHTML = `
+
+        <div class="result-box">
+
+            <button
+                class="primary-button print-button"
+                onclick="window.print()"
+            >
+                🖨️ Print
+            </button>
+
+
+            <h2 class="result-title">
+                ${escapeHTML(title)}
+            </h2>
+
+
+            ${
+                questions
+                    .map(function(question,index){
+
+                        const options =
+                            Array.isArray(
+                                question.options
+                            )
+                                ? question.options
+                                : [];
+
+
+                        return `
+
+                            <div
+                                class="generated-question"
+                            >
+
+                                <h3>
+
+                                    ${index + 1}.
+                                    ${escapeHTML(
+                                        question.question
+                                    )}
+
+                                </h3>
+
+
+                                ${
+                                    options
+                                        .map(
+                                            function(
+                                                option,
+                                                optionIndex
+                                            ){
+
+                                                return `
+
+                                                    <div class="option">
+
+                                                        <strong>
+                                                            ${String.fromCharCode(
+                                                                65 +
+                                                                optionIndex
+                                                            )}.
+                                                        </strong>
+
+                                                        ${escapeHTML(
+                                                            option
+                                                        )}
+
+                                                    </div>
+
+                                                `;
+
+                                            }
+                                        )
+                                        .join("")
+                                }
+
+
+                                ${
+                                    question.answer
+                                        ? `
+
+                                            <div class="answer">
+
+                                                Answer:
+                                                ${escapeHTML(
+                                                    question.answer
+                                                )}
+
+                                            </div>
+
+                                        `
+                                        : ""
+                                }
+
+
+                                ${
+                                    question.explanation
+                                        ? `
+
+                                            <div class="explanation">
+
+                                                ${escapeHTML(
+                                                    question.explanation
+                                                )}
+
+                                            </div>
+
+                                        `
+                                        : ""
+                                }
+
+                            </div>
+
+                        `;
+
+                    })
+                    .join("")
+            }
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   LESSON PLANNER
+===================================================== */
+
+$("createLessonBtn")
+    .addEventListener(
+        "click",
+        async function(){
+
+            const className =
+                $("lessonClass")
+                    .value
+                    .trim();
+
+
+            const subject =
+                $("lessonSubject")
+                    .value
+                    .trim();
+
+
+            const topic =
+                $("lessonTopic")
+                    .value
+                    .trim();
+
+
+            const objective =
+                $("lessonObjective")
+                    .value
+                    .trim();
+
+
+            const duration =
+                $("lessonDuration")
+                    .value
+                    .trim();
+
+
+            if(
+                !className ||
+                !subject ||
+                !topic
+            ){
+
+                showToast(
+                    "Enter class, subject and topic"
+                );
+
+                return;
+
+            }
+
+
+            showLoading(
+                $("lessonResult"),
+                "Creating Lesson Plan..."
+            );
+
+
+            try{
+
+                const lesson =
+                    await postJSON(
+                        "/api/generate-lesson",
+                        {
+                            className,
+                            subject,
+                            topic,
+                            objective,
+                            duration
+                        }
+                    );
+
+
+                const sections =
+                    Array.isArray(
+                        lesson.sections
+                    )
+                        ? lesson.sections
+                        : [];
+
+
+                const materials =
+                    Array.isArray(
+                        lesson.materials
+                    )
+                        ? lesson.materials
+                        : [];
+
+
+                const homework =
+                    Array.isArray(
+                        lesson.homework
+                    )
+                        ? lesson.homework
+                        : [];
+
+
+                $("lessonResult").innerHTML = `
+
+                    <div class="result-box">
+
+                        <button
+                            class="primary-button print-button"
+                            onclick="window.print()"
+                        >
+                            🖨️ Print Lesson Plan
+                        </button>
+
+
+                        <h2 class="result-title">
+
+                            ${escapeHTML(
+                                lesson.title ||
+                                "Lesson Plan"
+                            )}
+
+                        </h2>
+
+
+                        <p class="result-subtitle">
+
+                            ${escapeHTML(className)}
+                            •
+                            ${escapeHTML(subject)}
+                            •
+                            ${escapeHTML(topic)}
+                            •
+                            ${escapeHTML(
+                                duration ||
+                                "45 minutes"
+                            )}
+
+                        </p>
+
+
+                        <div class="generated-question">
+
+                            <h3>
+                                🎯 Learning Objective
+                            </h3>
+
+                            <p>
+
+                                ${escapeHTML(
+                                    lesson.objective ||
+                                    objective ||
+                                    ""
+                                )}
+
+                            </p>
+
+                        </div>
+
+
+                        ${
+                            sections
+                                .map(
+                                    function(section){
+
+                                        const questions =
+                                            Array.isArray(
+                                                section.questions
+                                            )
+                                                ? section.questions
+                                                : [];
+
+
+                                        return `
+
+                                            <div
+                                                class="generated-question"
+                                            >
+
+                                                <h3>
+
+                                                    ${escapeHTML(
+                                                        section.title ||
+                                                        "Lesson Section"
+                                                    )}
+
+                                                </h3>
+
+
+                                                <p>
+
+                                                    <strong>
+                                                        ⏱️
+                                                        ${escapeHTML(
+                                                            section.time ||
+                                                            ""
+                                                        )}
+                                                    </strong>
+
+                                                </p>
+
+
+                                                <p>
+
+                                                    <strong>
+                                                        Teacher Activity:
+                                                    </strong>
+
+                                                    <br>
+
+                                                    ${escapeHTML(
+                                                        section.teacherActivity ||
+                                                        ""
+                                                    )}
+
+                                                </p>
+
+
+                                                <p>
+
+                                                    <strong>
+                                                        Student Activity:
+                                                    </strong>
+
+                                                    <br>
+
+                                                    ${escapeHTML(
+                                                        section.studentActivity ||
+                                                        ""
+                                                    )}
+
+                                                </p>
+
+
+                                                ${
+                                                    questions.length
+                                                        ? `
+
+                                                            <p>
+                                                                <strong>
+                                                                    Questions:
+                                                                </strong>
+                                                            </p>
+
+                                                            <ul>
+
+                                                                ${
+                                                                    questions
+                                                                        .map(
+                                                                            function(q){
+
+                                                                                return `
+                                                                                    <li>
+                                                                                        ${escapeHTML(q)}
+                                                                                    </li>
+                                                                                `;
+
+                                                                            }
+                                                                        )
+                                                                        .join("")
+                                                                }
+
+                                                            </ul>
+
+                                                        `
+                                                        : ""
+                                                }
+
+                                            </div>
+
+                                        `;
+
+                                    }
+                                )
+                                .join("")
+                        }
+
+
+                        <div
+                            class="generated-question"
+                        >
+
+                            <h3>
+                                📚 Materials
+                            </h3>
+
+
+                            <ul>
+
+                                ${
+                                    materials
+                                        .map(
+                                            function(item){
+
+                                                return `
+                                                    <li>
+                                                        ${escapeHTML(item)}
+                                                    </li>
+                                                `;
+
+                                            }
+                                        )
+                                        .join("")
+                                }
+
+                            </ul>
+
+                        </div>
+
+
+                        <div
+                            class="generated-question"
+                        >
+
+                            <h3>
+                                🏠 Homework
+                            </h3>
+
+
+                            <ul>
+
+                                ${
+                                    homework
+                                        .map(
+                                            function(item){
+
+                                                return `
+                                                    <li>
+                                                        ${escapeHTML(item)}
+                                                    </li>
+                                                `;
+
+                                            }
+                                        )
+                                        .join("")
+                                }
+
+                            </ul>
+
+                        </div>
+
+
+                    </div>
+
+                `;
+
+
+                showToast(
+                    "Lesson plan created"
+                );
+
+
+            }catch(error){
+
+                console.error(
+                    error
+                );
+
+
+                $("lessonResult").innerHTML = `
+
+                    <div class="result-box">
+
+                        <h2>
+                            ❌ Unable to Generate
+                        </h2>
+
+                        <p class="result-subtitle">
+
+                            ${escapeHTML(
+                                error.message
+                            )}
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   QUESTION PAPER
+===================================================== */
+
+$("generateQuestionBtn")
+    .addEventListener(
+        "click",
+        async function(){
+
+            const className =
+                $("questionClass")
+                    .value
+                    .trim();
+
+
+            const subject =
+                $("questionSubject")
+                    .value
+                    .trim();
+
+
+            const topic =
+                $("questionTopic")
+                    .value
+                    .trim();
+
+
+            const count =
+                Number(
+                    $("questionCount")
+                        .value
+                ) || 5;
+
+
+            const difficulty =
+                $("questionDifficulty")
+                    .value;
+
+
+            const style =
+                $("questionStyle")
+                    .value;
+
+
+            if(
+                !className ||
+                !subject ||
+                !topic
+            ){
+
+                showToast(
+                    "Enter class, subject and topic"
+                );
+
+                return;
+
+            }
+
+
+            showLoading(
+                $("questionResult"),
+                "Generating Questions..."
+            );
+
+
+            try{
+
+                const data =
+                    await postJSON(
+                        "/api/generate-questions",
+                        {
+                            className,
+                            subject,
+                            topic,
+                            count,
+                            difficulty,
+                            style
+                        }
+                    );
+
+
+                renderQuestions(
+                    data,
+                    $("questionResult"),
+                    "Generated Question Paper"
+                );
+
+
+                showToast(
+                    "Questions created"
+                );
+
+
+            }catch(error){
+
+                $("questionResult").innerHTML = `
+
+                    <div class="result-box">
+
+                        <h2>
+                            ❌ Unable to Generate
+                        </h2>
+
+                        <p class="result-subtitle">
+
+                            ${escapeHTML(
+                                error.message
+                            )}
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   QUIZ MAKER
+===================================================== */
+
+$("createQuizBtn")
+    .addEventListener(
+        "click",
+        async function(){
+
+            const className =
+                $("quizClass")
+                    .value
+                    .trim();
+
+
+            const subject =
+                $("quizSubject")
+                    .value
+                    .trim();
+
+
+            const topic =
+                $("quizTopic")
+                    .value
+                    .trim();
+
+
+            const count =
+                Number(
+                    $("quizCount")
+                        .value
+                ) || 5;
+
+
+            const difficulty =
+                $("quizDifficulty")
+                    .value;
+
+
+            if(
+                !className ||
+                !subject ||
+                !topic
+            ){
+
+                showToast(
+                    "Enter class, subject and topic"
+                );
+
+                return;
+
+            }
+
+
+            showLoading(
+                $("quizResult"),
+                "Creating Quiz..."
+            );
+
+
+            try{
+
+                const data =
+                    await postJSON(
+                        "/api/generate-quiz",
+                        {
+                            className,
+                            subject,
+                            topic,
+                            count,
+                            difficulty
+                        }
+                    );
+
+
+                renderQuestions(
+                    data,
+                    $("quizResult"),
+                    "Generated Quiz"
+                );
+
+
+                showToast(
+                    "Quiz created"
+                );
+
+
+            }catch(error){
+
+                $("quizResult").innerHTML = `
+
+                    <div class="result-box">
+
+                        <h2>
+                            ❌ Unable to Generate
+                        </h2>
+
+                        <p class="result-subtitle">
+
+                            ${escapeHTML(
+                                error.message
+                            )}
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   WORKSHEET
+===================================================== */
+
+$("createWorksheetBtn")
+    .addEventListener(
+        "click",
+        async function(){
+
+            const className =
+                $("worksheetClass")
+                    .value
+                    .trim();
+
+
+            const subject =
+                $("worksheetSubject")
+                    .value
+                    .trim();
+
+
+            const topic =
+                $("worksheetTopic")
+                    .value
+                    .trim();
+
+
+            const count =
+                Number(
+                    $("worksheetCount")
+                        .value
+                ) || 10;
+
+
+            if(
+                !className ||
+                !subject ||
+                !topic
+            ){
+
+                showToast(
+                    "Enter class, subject and topic"
+                );
+
+                return;
+
+            }
+
+
+            showLoading(
+                $("worksheetResult"),
+                "Creating Worksheet..."
+            );
+
+
+            try{
+
+                const data =
+                    await postJSON(
+                        "/api/generate-worksheet",
+                        {
+                            className,
+                            subject,
+                            topic,
+                            count
+                        }
+                    );
+
+
+                renderQuestions(
+                    data,
+                    $("worksheetResult"),
+                    "Generated Worksheet"
+                );
+
+
+                showToast(
+                    "Worksheet created"
+                );
+
+
+            }catch(error){
+
+                $("worksheetResult").innerHTML = `
+
+                    <div class="result-box">
+
+                        <h2>
+                            ❌ Unable to Generate
+                        </h2>
+
+                        <p class="result-subtitle">
+
+                            ${escapeHTML(
+                                error.message
+                            )}
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   SERVICE WORKER / PWA
+===================================================== */
+
+if(
+    "serviceWorker" in navigator
+){
+
+    window.addEventListener(
+        "load",
+        function(){
+
+            navigator.serviceWorker
+                .register(
+                    "service-worker.js"
+                )
+                .then(function(){
+
+                    console.log(
+                        "Smart Teach service worker registered."
+                    );
+
+                })
+                .catch(function(error){
+
+                    console.error(
+                        "Service worker error:",
+                        error
+                    );
+
+                });
+
+        }
+    );
+
+}
+
+</script>
+
+
+</body>
+</html>
